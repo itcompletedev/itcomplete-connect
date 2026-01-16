@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -71,7 +72,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
     "Serviços Gerenciados",
   ];
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -90,7 +91,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 md:w-full md:max-w-lg flex items-center justify-center"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <div className="bg-card border border-border rounded-2xl shadow-2xl overflow-hidden card-glow w-full max-w-lg max-h-[90vh] overflow-y-auto">
               {/* Header */}
@@ -245,7 +246,8 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 
