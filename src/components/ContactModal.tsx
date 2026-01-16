@@ -90,9 +90,9 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg mx-4"
+            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 md:w-full md:max-w-lg flex items-center justify-center"
           >
-            <div className="bg-card border border-border rounded-2xl shadow-2xl overflow-hidden card-glow">
+            <div className="bg-card border border-border rounded-2xl shadow-2xl overflow-hidden card-glow w-full max-w-lg max-h-[90vh] overflow-y-auto">
               {/* Header */}
               <div className="px-6 py-5 border-b border-border flex items-center justify-between">
                 <div>
