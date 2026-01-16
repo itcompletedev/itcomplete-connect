@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, CheckCircle2 } from "lucide-react";
+import { DottedSurface } from "@/components/ui/dotted-surface";
+import { ArrowRight, Shield } from "lucide-react";
 
 interface HeroSectionProps {
   onOpenModal: () => void;
@@ -10,9 +11,9 @@ const HeroSection = ({
   onOpenModal
 }: HeroSectionProps) => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden bg-background">
-      {/* Background Base with Grid */}
-      <div className="absolute inset-0 bg-grid-white opacity-[0.03]" />
+    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-[#0a0a12]">
+      {/* 3D Dotted Surface Background */}
+      <DottedSurface className="opacity-40" />
 
       {/* Primary Glow - Top Center */}
       <div
