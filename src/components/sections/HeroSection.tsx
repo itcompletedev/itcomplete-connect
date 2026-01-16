@@ -1,138 +1,120 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield } from "lucide-react";
+import { ArrowRight, Shield, CheckCircle2 } from "lucide-react";
+
 interface HeroSectionProps {
   onOpenModal: () => void;
 }
+
 const HeroSection = ({
   onOpenModal
 }: HeroSectionProps) => {
-  return <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-[#0a0a12]">
-      {/* Background Base - Dark with slight blue tint */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d18] via-[#0a0a12] to-[#080810]" />
-      
-      {/* Aurora Glow - Top Purple/Pink */}
-      <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px]"
+  return (
+    <section className="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden bg-background">
+      {/* Background Base with Grid */}
+      <div className="absolute inset-0 bg-grid-white opacity-[0.03]" />
+
+      {/* Primary Glow - Top Center */}
+      <div
+        className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[1000px] h-[500px] opacity-30 pointer-events-none"
         style={{
-          background: `
-            radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
-            radial-gradient(ellipse 40% 30% at 30% 10%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-            radial-gradient(ellipse 40% 30% at 70% 10%, rgba(236, 72, 153, 0.08) 0%, transparent 50%)
-          `
-        }}
-      />
-      
-      {/* Secondary Glow - Mid section */}
-      <div 
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px]"
-        style={{
-          background: `
-            radial-gradient(ellipse 100% 80% at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%)
-          `
+          background: `radial-gradient(ellipse 60% 50% at 50% 0%, hsl(var(--primary)), transparent 70%)`,
+          filter: "blur(80px)"
         }}
       />
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(139, 92, 246, 0.1) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(139, 92, 246, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 70%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 70%, transparent 100%)"
-          }}
-        />
-      </div>
-
-      {/* Horizon Glow - Bottom */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-[400px]"
+      {/* Secondary Accent - Bottom Right */}
+      <div
+        className="absolute bottom-[-100px] right-[-100px] w-[600px] h-[600px] opacity-10 pointer-events-none"
         style={{
-          background: `
-            linear-gradient(to top, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-            radial-gradient(ellipse 80% 50% at 50% 100%, rgba(139, 92, 246, 0.1) 0%, transparent 60%)
-          `
+          background: `radial-gradient(circle at 50% 50%, hsl(var(--primary)), transparent 60%)`,
+          filter: "blur(100px)"
         }}
       />
-
-      {/* Floating Orbs */}
-      <div className="absolute top-[20%] left-[20%] w-32 h-32 bg-purple-500/10 rounded-full blur-[60px] animate-pulse" />
-      <div className="absolute top-[30%] right-[25%] w-24 h-24 bg-pink-500/10 rounded-full blur-[50px] animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute bottom-[30%] left-[30%] w-20 h-20 bg-cyan-500/5 rounded-full blur-[40px] animate-pulse" style={{ animationDelay: "2s" }} />
-
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.5
-        }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm mb-8">
-            <Shield size={16} className="text-primary" />
-            <span className="text-sm text-muted-foreground">
-              Desde 2008 protegendo ambientes críticos
+        <div className="max-w-5xl mx-auto text-center">
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm mb-8"
+          >
+            <Shield size={14} className="text-primary" />
+            <span className="text-xs font-medium text-primary tracking-wide uppercase">
+              Parceiro Certificado MSP
             </span>
+            <div className="w-1 h-1 rounded-full bg-primary" />
+            <span className="text-xs text-muted-foreground">Desde 2008</span>
           </motion.div>
 
-          <motion.h1 initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.5,
-          delay: 0.1
-        }} className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-            Tecnologia crítica exige{" "}
-            <span className="text-gradient">especialistas confiáveis</span>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-[1.1] mb-8 tracking-tight"
+          >
+            Sua operação de TI, <br />
+            <span className="text-gradient hover:glow-text transition-all duration-300">
+              blindada e eficiente.
+            </span>
           </motion.h1>
 
-          <motion.p initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.5,
-          delay: 0.2
-        }} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Infraestrutura, cibersegurança, cloud e serviços gerenciados para ambientes corporativos que não podem parar.
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+          >
+            Infraestrutura crítica, segurança ofensiva e cloud services para empresas que não aceitam downtime.
           </motion.p>
 
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.5,
-          delay: 0.3
-        }} className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="xl" onClick={onOpenModal}>
-              Solicitar orçamento
-              <ArrowRight size={20} />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
+            <Button
+              className="h-14 px-8 text-lg bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_30px_-5px_hsl(var(--primary)/0.4)] transition-all hover:scale-105"
+              onClick={onOpenModal}
+            >
+              Falar com um especialista
+              <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <Button variant="heroOutline" size="xl" onClick={onOpenModal}>
-              Falar com especialista
+            <Button
+              variant="outline"
+              className="h-14 px-8 text-lg border-white/10 bg-white/5 hover:bg-white/10 text-foreground transition-all hover:scale-105"
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Conhecer soluções
             </Button>
           </motion.div>
 
-          {/* Trust Indicators */}
-          
+          {/* Trust Indicators - Mini Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="mt-20 pt-8 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
+          >
+            {[
+              { label: "SLA Garantido", value: "99.9%" },
+              { label: "Clientes Ativos", value: "+50" },
+              { label: "Projetos", value: "+200" },
+              { label: "Suporte", value: "24/7" },
+            ].map((stat, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <span className="text-2xl font-bold text-foreground font-display">{stat.value}</span>
+                <span className="text-sm text-muted-foreground">{stat.label}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
