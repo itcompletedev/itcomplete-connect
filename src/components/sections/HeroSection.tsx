@@ -8,21 +8,28 @@ const HeroSection = ({
   onOpenModal
 }: HeroSectionProps) => {
   return <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* Background Effects */}
+      {/* Background Base */}
       <div className="absolute inset-0 surface-gradient" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-glow-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/3 rounded-full blur-3xl animate-glow-pulse" style={{
-      animationDelay: "1.5s"
-    }} />
       
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-        backgroundImage: `linear-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, hsl(var(--primary) / 0.1) 1px, transparent 1px)`,
-        backgroundSize: "60px 60px"
-      }} />
+      {/* Grid Pattern - Visible */}
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, hsl(var(--primary) / 0.08) 1px, transparent 1px),
+              linear-gradient(to bottom, hsl(var(--primary) / 0.08) 1px, transparent 1px)
+            `,
+            backgroundSize: "80px 80px",
+            maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)",
+            WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)"
+          }}
+        />
       </div>
+
+      {/* Glow Effects */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/10 rounded-full blur-[120px] animate-glow-pulse" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-primary/5 rounded-full blur-[80px] animate-glow-pulse" style={{ animationDelay: "1s" }} />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
