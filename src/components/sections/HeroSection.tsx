@@ -7,29 +7,64 @@ interface HeroSectionProps {
 const HeroSection = ({
   onOpenModal
 }: HeroSectionProps) => {
-  return <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* Background Base */}
-      <div className="absolute inset-0 surface-gradient" />
+  return <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-[#0a0a12]">
+      {/* Background Base - Dark with slight blue tint */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d18] via-[#0a0a12] to-[#080810]" />
       
-      {/* Grid Pattern - Visible */}
+      {/* Aurora Glow - Top Purple/Pink */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px]"
+        style={{
+          background: `
+            radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 30% at 30% 10%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+            radial-gradient(ellipse 40% 30% at 70% 10%, rgba(236, 72, 153, 0.08) 0%, transparent 50%)
+          `
+        }}
+      />
+      
+      {/* Secondary Glow - Mid section */}
+      <div 
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px]"
+        style={{
+          background: `
+            radial-gradient(ellipse 100% 80% at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%)
+          `
+        }}
+      />
+
+      {/* Grid Pattern */}
       <div className="absolute inset-0">
         <div 
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(to right, hsl(var(--primary) / 0.08) 1px, transparent 1px),
-              linear-gradient(to bottom, hsl(var(--primary) / 0.08) 1px, transparent 1px)
+              linear-gradient(to right, rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(139, 92, 246, 0.1) 1px, transparent 1px)
             `,
-            backgroundSize: "80px 80px",
-            maskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)",
-            WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)"
+            backgroundSize: "60px 60px",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 70%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 70%, transparent 100%)"
           }}
         />
       </div>
 
-      {/* Glow Effects */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/10 rounded-full blur-[120px] animate-glow-pulse" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-primary/5 rounded-full blur-[80px] animate-glow-pulse" style={{ animationDelay: "1s" }} />
+      {/* Horizon Glow - Bottom */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-[400px]"
+        style={{
+          background: `
+            linear-gradient(to top, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+            radial-gradient(ellipse 80% 50% at 50% 100%, rgba(139, 92, 246, 0.1) 0%, transparent 60%)
+          `
+        }}
+      />
+
+      {/* Floating Orbs */}
+      <div className="absolute top-[20%] left-[20%] w-32 h-32 bg-purple-500/10 rounded-full blur-[60px] animate-pulse" />
+      <div className="absolute top-[30%] right-[25%] w-24 h-24 bg-pink-500/10 rounded-full blur-[50px] animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute bottom-[30%] left-[30%] w-20 h-20 bg-cyan-500/5 rounded-full blur-[40px] animate-pulse" style={{ animationDelay: "2s" }} />
+
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
