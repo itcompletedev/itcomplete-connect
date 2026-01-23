@@ -9,13 +9,12 @@ const HumanSection = () => {
         <div className="humancontainer">
             <div className="humancontainer-wrapper-one">
                 <div>
-                    <h2>Human</h2>
-                    <p>Experience the power of AI with our cutting-edge technology.</p>
+                    <h1>Human</h1>
+                    <p>Desenvolvemos resultados orientados a pessoas</p>
                 </div>
             </div>
 
             <div className="humancontainer-wrapper-two">
-                <img id="human" src="/images/SECTIONHUMAN-noBG-glow.png" alt="" />
             </div>
         </div>
     );

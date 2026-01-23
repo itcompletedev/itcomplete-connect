@@ -19,6 +19,7 @@ const Index = () => {
 
       <main>
         <HeroSection onOpenModal={() => setIsModalOpen(true)} />
+        <HumanSection />
         <ServicesSection />
         <PartnersSection />
         <DifferentialsSection />

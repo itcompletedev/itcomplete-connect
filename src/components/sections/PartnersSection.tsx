@@ -4,14 +4,16 @@ const partners = [
   { name: "Cisco", logo: "/images/Partners/Cisco-logo.png" },
   { name: "Microsoft", logo: "/images/Partners/microsoft.png" },
   { name: "Cisco", logo: "/images/Partners/Cisco-logo.png" },
-  { name: "Google", logo: "/images/Partners/googlepartner.png" }
+  { name: "Google", logo: "/images/Partners/googlepartner.png" },
+  { name: "R&M", logo: "/images/Partners/R&M.png" },
+  { name: "CM Comandos", logo: "/images/Partners/cmcomandos.png" }
 ];
 
 const partners2 = [
   { name: "Huawei", logo: "/images/Partners/huaweilogo.png" },
   { name: "Fortinet", logo: "/images/Partners/fortinet.png" },
   { name: "Hillstone", logo: "/images/Partners/hillstone.png" },
-  { name: "Intelbras", logo: "/images/Partners/intelbras.png" }
+  { name: "Intelbras", logo: "/images/Partners/intelbras.png" },
 
 ];
 

@@ -38,12 +38,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5rem;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
-    background: linear-gradient(to bottom, #89ffae, #00ff0d00);
+    background-image: url('/images/ITCOMPLETEBANNER.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .humancontainer-wrapper-one {
