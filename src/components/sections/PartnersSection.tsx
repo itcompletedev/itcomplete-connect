@@ -2,16 +2,17 @@ import { motion } from "framer-motion";
 
 const partners = [
   { name: "Cisco", logo: "/images/Partners/Cisco-logo.png" },
-  { name: "Dell", logo: "/images/Partners/Dell_Logo.png" },
   { name: "Microsoft", logo: "/images/Partners/microsoft.png" },
   { name: "Cisco", logo: "/images/Partners/Cisco-logo.png" },
-  { name: "Dell", logo: "/images/Partners/Dell_Logo.png" },
   { name: "Google", logo: "/images/Partners/googlepartner.png" }
 ];
 
 const partners2 = [
   { name: "Huawei", logo: "/images/Partners/huaweilogo.png" },
-  { name: "Fortinet", logo: "/images/Partners/fortinet.png" }
+  { name: "Fortinet", logo: "/images/Partners/fortinet.png" },
+  { name: "Hillstone", logo: "/images/Partners/hillstone.png" },
+  { name: "Intelbras", logo: "/images/Partners/intelbras.png" }
+
 ];
 
 const PartnersSection = () => {
@@ -28,7 +29,7 @@ const PartnersSection = () => {
           className="text-center mb-16"
         >
           <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary border border-primary/20 rounded-full bg-primary/5 mb-4">
-            Soluções para resultados
+            IT Complete
           </span>
           <h3 className="text-2xl md:text-3xl font-display font-medium text-foreground">
             Parcerias estratégicas
@@ -52,7 +53,7 @@ const PartnersSection = () => {
             {[...partners, ...partners].map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
-                className="flex items-center justify-center min-w-[120px] md:max-w-[200px] group transition-all duration-500"
+                className="flex items-center justify-center min-w-[120px] md:max-w-[180px] group transition-all duration-500"
               >
                 <img
                   src={partner.logo}
