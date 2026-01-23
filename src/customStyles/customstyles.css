@@ -1,0 +1,144 @@
+.logo-img {
+    width: 60%;
+    transition: filter 0.3s ease;
+}
+
+.light .logo-img {
+    filter: invert(1);
+}
+
+#hero-box {
+    display: none;
+}
+
+#hero-image {
+    width: 70%;
+    z-index: -1;
+}
+
+.maintitle {
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+    color: white;
+}
+
+#services {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: linear-gradient(to bottom, #0f1b2e, #142759);
+    color: #fff;
+    height: fit-content;
+}
+
+.humancontainer {
+    width: 95%;
+    margin: 0 auto;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    background: linear-gradient(to bottom, #89ffae, #00ff0d00);
+}
+
+.humancontainer-wrapper-one {
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary);
+    transform: translateZ(1560px);
+    padding: 4rem;
+    color: white;
+    font-size: 1.5rem;
+    overflow: visible;
+}
+
+.humancontainer-wrapper-two {
+    width: 150%;
+    z-index: 1;
+    overflow: visible;
+}
+
+#human {
+    width: 200% !important;
+}
+
+.videoloop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    backdrop-filter: blur(5px);
+}
+
+.overlaybackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: .5;
+}
+
+@media screen and (min-width: 1024px) {
+
+    #herosection {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .overlaybackground {
+        background: linear-gradient(rgba(0, 0, 0, 0.868), #64636300);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+
+
+    .logo-img {
+        width: 25%;
+    }
+
+    #hero-image {
+        width: 40%;
+    }
+
+    .humancontainer {
+        width: 50%;
+        margin: 0 auto;
+        height: 400px;
+        display: flex;
+        flex-direction: row;
+        overflow: visible;
+    }
+
+    .humancontainer-wrapper-two {
+        width: 100%;
+        height: 80%;
+        position: relative;
+        z-index: 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow: visible;
+    }
+
+    #human {
+        width: 100%;
+
+    }
+
+}

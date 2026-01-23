@@ -26,7 +26,7 @@ const differentials = [
 
 const DifferentialsSection = () => {
   return (
-    <section className="py-24 bg-black/40 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden">
       {/* Background Tech Elements */}
       <div className="absolute inset-0 bg-grid-white opacity-[0.02]" />
 

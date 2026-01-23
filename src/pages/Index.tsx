@@ -8,6 +8,7 @@ import DifferentialsSection from "@/components/sections/DifferentialsSection";
 import ProofSection from "@/components/sections/ProofSection";
 import PartnersSection from "@/components/sections/PartnersSection";
 import CTASection from "@/components/sections/CTASection";
+import HumanSection from "@/components/sections/HumanSection";
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +16,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header onOpenModal={() => setIsModalOpen(true)} />
-      
+
       <main>
         <HeroSection onOpenModal={() => setIsModalOpen(true)} />
         <ServicesSection />
@@ -26,7 +27,7 @@ const Index = () => {
       </main>
 
       <Footer />
-      
+
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

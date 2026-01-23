@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +7,30 @@
 
 @layer base {
   :root {
-    /* Brand Colors - Lime/Neon Green (#CEFFA4) */
-    /* Mobile: 92 100% 82% */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
     --primary: 92 100% 82%;
     --primary-foreground: 240 10% 4%;
-    /* Dark text on lime background */
-
-    /* Deep Dark Backgrounds */
-    --background: 240 10% 4%;
-    /* #09090b - Very dark blue-grey */
-    --foreground: 0 0% 98%;
-
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 10% 6%;
-    --popover-foreground: 0 0% 98%;
-
-    --secondary: 240 6% 12%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 6% 14%;
-    --muted-foreground: 240 5% 60%;
-
-    --accent: 240 6% 14%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 84% 60%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-
-    --border: 240 6% 14%;
-    --input: 240 6% 14%;
-    --ring: 92 100% 82%;
-
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
     --radius: 0.75rem;
 
     /* Custom Gradients & Tokens */
-    --gradient-start: 240 10% 4%;
-    --gradient-end: 240 10% 8%;
+    --gradient-start: 0 0% 100%;
+    --gradient-end: 240 4.8% 95.9%;
   }
 
   .dark {
@@ -79,7 +66,11 @@
     font-family: 'Inter', system-ui, sans-serif;
   }
 
-  h1,
+  h1 {
+    font-family: 'Unbounded';
+    font-weight: 400;
+  }
+
   h2,
   h3,
   h4,
@@ -96,7 +87,7 @@
   }
 
   .text-gradient-subtle {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-white to-white/60;
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground to-foreground/60;
   }
 
   /* Glow Effects */
@@ -114,7 +105,7 @@
 
   /* Glass Effects */
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply bg-background/5 backdrop-blur-xl border border-border/10;
   }
 
   .glass-card {
@@ -124,7 +115,7 @@
   /* Backgrounds */
   .bg-grid-white {
     background-size: 40px 40px;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-image: linear-gradient(to right, hsl(var(--foreground) / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.05) 1px, transparent 1px);
   }
 }

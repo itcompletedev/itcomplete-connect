@@ -63,8 +63,13 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 				const z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
 
 				positions.push(x, y, z);
-				// Purple-ish color to match the theme
-				colors.push(0.55, 0.36, 0.96); // RGB normalized for purple
+				// Purpose-ish color to match the theme
+				// Adapt color based on theme for better visibility
+				if (theme === 'dark') {
+					colors.push(0.55, 0.36, 0.96); // Original purple
+				} else {
+					colors.push(0.45, 0.26, 0.86); // Slightly darker purple for light mode
+				}
 			}
 		}
 

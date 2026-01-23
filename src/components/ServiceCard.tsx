@@ -34,12 +34,12 @@ const ServiceCard = ({ icon: Icon, title, description, href, delay = 0 }: Servic
             {title}
           </h3>
 
-          <p className="text-muted-foreground text-base leading-relaxed mb-6 group-hover:text-foreground/80 transition-colors">
+          <p className="text-base leading-relaxed mb-6 group-hover:text-foreground/80 transition-colors">
             {description}
           </p>
 
           <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm tracking-wide uppercase">
-            Explorar Solução
+            Explorar
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </span>
         </div>
