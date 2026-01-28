@@ -41,7 +41,7 @@ const PartnersSection = () => {
         {/* Marquee Wrapper with Fade Effects */}
         <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           <motion.div
-            className="flex space-x-12 md:space-x-24 w-max items-center"
+            className="flex space-x-0 md:space-x-0 w-max items-center"
             animate={{
               x: [0, -1000],
             }}
@@ -55,12 +55,12 @@ const PartnersSection = () => {
             {[...partners, ...partners].map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
-                className="flex items-center justify-center min-w-[120px] md:max-w-[180px] group transition-all duration-500"
+                className="flex items-center justify-center min-w-[200px] md:max-w-[200px] group transition-all duration-500"
               >
                 <img
                   src={partner.logo}
                   alt={`${partner.name} logo`}
-                  className="h-9 md:h-12 w-auto object-contain grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                  className="h-9 md:h-12 w-auto object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
               </div>
             ))}
@@ -87,7 +87,7 @@ const PartnersSection = () => {
                 <img
                   src={partner2.logo}
                   alt={`${partner2.name} logo`}
-                  className="h-9 md:h-12 w-auto object-contain grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                  className="h-15 md:h-12 w-auto object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
               </div>
             ))}

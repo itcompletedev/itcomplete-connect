@@ -6,17 +6,19 @@ import "./../../customStyles/customstyles.css"
 
 const HumanSection = () => {
     return (
-        <div className="humancontainer">
-            <div className="humancontainer-wrapper-one">
-                <div>
-                    <h1>Human</h1>
-                    <p>Desenvolvemos resultados orientados a pessoas</p>
+        <section className="humanSection">
+            <div className="humancontainer">
+                <div className="humancontainer-wrapper-one">
+                    <div className="humancontainer-wrapper-one-text">
+                        <h1>Expertise</h1>
+                        <p>Desenvolvemos resultados orientados a pessoas</p>
+                    </div>
+                </div>
+
+                <div className="humancontainer-wrapper-two">
                 </div>
             </div>
-
-            <div className="humancontainer-wrapper-two">
-            </div>
-        </div>
+        </section>
     );
 };
 

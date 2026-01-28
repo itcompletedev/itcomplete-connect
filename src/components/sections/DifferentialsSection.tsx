@@ -15,7 +15,7 @@ const differentials = [
   {
     icon: Lock,
     title: "Security by Design",
-    description: "Segurança integrada em todas as camadas da solução.",
+    description: "Segurança integrada em todas as camadas das soluções.",
   },
   {
     icon: Users,

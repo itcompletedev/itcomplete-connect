@@ -25,15 +25,21 @@
 #services {
     padding-top: 5rem;
     padding-bottom: 5rem;
-    background: linear-gradient(to bottom, #0f1b2e, #142759);
+    background: linear-gradient(to bottom, #0f1b2e, #142759), url(https://grainy-gradients.vercel.app/noise.svg);
     color: #fff;
     height: fit-content;
 }
 
+.humanSection {
+    width: 100%;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
 .humancontainer {
-    width: 95%;
-    margin: 0 auto;
-    height: 600px;
+    background-color: #101010;
+    width: 70%;
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,8 +57,6 @@
 .humancontainer-wrapper-one {
     width: 100%;
     height: 100%;
-    background-color: var(--primary);
-    transform: translateZ(1560px);
     padding: 4rem;
     color: white;
     font-size: 1.5rem;
@@ -119,12 +123,13 @@
     }
 
     .humancontainer {
-        width: 50%;
+        width: 60%;
         margin: 0 auto;
-        height: 400px;
+        height: 450px;
         display: flex;
         flex-direction: row;
         overflow: visible;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.395);
     }
 
     .humancontainer-wrapper-two {
@@ -138,9 +143,8 @@
         overflow: visible;
     }
 
-    #human {
-        width: 100%;
-
+    .humancontainer-wrapper-one-text h1 {
+        font-size: 3rem;
     }
 
 }
