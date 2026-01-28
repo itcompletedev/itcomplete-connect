@@ -58,8 +58,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Sending confirmation email to ${email}`);
 
-    // Send email using Resend API with template
-    const response = await fetch("https://api.resend.com/emails", {
+    // Send confirmation email to customer using Resend API with template
+    const customerEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${RESEND_API_KEY}`,
@@ -81,15 +81,72 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
-    const emailResponse = await response.json();
+    const customerEmailData = await customerEmailResponse.json();
 
-    if (!response.ok) {
-      throw new Error(`Resend API error [${response.status}]: ${JSON.stringify(emailResponse)}`);
+    if (!customerEmailResponse.ok) {
+      throw new Error(`Resend API error (customer) [${customerEmailResponse.status}]: ${JSON.stringify(customerEmailData)}`);
     }
 
-    console.log("Email sent successfully:", emailResponse);
+    console.log("Customer email sent successfully:", customerEmailData);
 
-    return new Response(JSON.stringify({ success: true, emailResponse }), {
+    // Send notification email to IT Complete team
+    console.log("Sending notification email to comercial@itcomplete.com.br");
+
+    const notificationEmailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "IT Complete <comercial@itcomplete.com.br>",
+        to: ["comercial@itcomplete.com.br"],
+        subject: `Nova solicitação de contato: ${name}`,
+        html: `
+          <h2>Nova solicitação de contato recebida</h2>
+          <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Nome:</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">E-mail:</td>
+              <td style="padding: 10px; border: 1px solid #ddd;"><a href="mailto:${email}">${email}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Telefone:</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${payload.record.phone || "Não informado"}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Empresa:</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${company || "Não informada"}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Serviço:</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${service || "Não especificado"}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Mensagem:</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${message || "Sem mensagem"}</td>
+            </tr>
+          </table>
+          <p style="margin-top: 20px; color: #666;">
+            Recebido em: ${new Date(payload.record.created_at).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}
+          </p>
+        `,
+      }),
+    });
+
+    const notificationEmailData = await notificationEmailResponse.json();
+
+    if (!notificationEmailResponse.ok) {
+      console.error(`Notification email failed [${notificationEmailResponse.status}]:`, notificationEmailData);
+      // Don't throw - customer email was already sent successfully
+    } else {
+      console.log("Notification email sent successfully:", notificationEmailData);
+    }
+
+    return new Response(JSON.stringify({ success: true, customerEmailData, notificationEmailData }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
