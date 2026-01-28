@@ -1,7 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -33,6 +32,10 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    if (!RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY is not configured");
+    }
+
     const payload: WebhookPayload = await req.json();
 
     // Validate this is an INSERT event
@@ -55,64 +58,32 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Sending confirmation email to ${email}`);
 
-    // Send email using Resend template
-    // Replace 'YOUR_TEMPLATE_ID' with your actual Resend template ID
-    const emailResponse = await resend.emails.send({
-      from: "IT Complete <noreply@itcomplete.com.br>", // Replace with your verified domain
-      to: [email],
-      subject: "Recebemos sua mensagem - IT Complete",
-      // Option 1: Use a template (uncomment and add your template ID)
-      // react: undefined,
-      // html: undefined,
-      // template_id: "YOUR_TEMPLATE_ID",
-      // data: {
-      //   name: name,
-      //   company: company,
-      //   service: service || "Não especificado",
-      // },
-      
-      // Option 2: Inline HTML (remove this if using template)
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
-            <h1 style="color: white; margin: 0;">IT Complete</h1>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
-            <h2 style="color: #333;">Olá, ${name}! 👋</h2>
-            
-            <p>Recebemos sua mensagem e agradecemos pelo contato!</p>
-            
-            <p>Nossa equipe analisará sua solicitação e retornará em breve.</p>
-            
-            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-              <p style="margin: 0 0 10px 0;"><strong>Resumo do seu contato:</strong></p>
-              <p style="margin: 5px 0;">📧 <strong>Empresa:</strong> ${company}</p>
-              <p style="margin: 5px 0;">🔧 <strong>Serviço:</strong> ${service || "Não especificado"}</p>
-              <p style="margin: 5px 0;">💬 <strong>Mensagem:</strong> ${message || "Sem mensagem adicional"}</p>
-            </div>
-            
-            <p>Se você tiver alguma dúvida urgente, entre em contato conosco pelo telefone <strong>(11) 3000-0000</strong>.</p>
-            
-            <p style="margin-top: 30px;">
-              Atenciosamente,<br>
-              <strong>Equipe IT Complete</strong>
-            </p>
-          </div>
-          
-          <div style="text-align: center; padding: 20px; color: #666; font-size: 12px;">
-            <p>© ${new Date().getFullYear()} IT Complete. Todos os direitos reservados.</p>
-          </div>
-        </body>
-        </html>
-      `,
+    // Send email using Resend API with template
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "IT Complete <noreply@itcomplete.com.br>", // Replace with your verified domain
+        to: [email],
+        subject: "Recebemos sua mensagem - IT Complete",
+        template_id: "be56005c-6881-4fa8-8783-4e972c0bfcd6",
+        data: {
+          name: name,
+          company: company,
+          service: service || "Não especificado",
+          message: message || "Sem mensagem adicional",
+        },
+      }),
     });
+
+    const emailResponse = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Resend API error [${response.status}]: ${JSON.stringify(emailResponse)}`);
+    }
 
     console.log("Email sent successfully:", emailResponse);
 
