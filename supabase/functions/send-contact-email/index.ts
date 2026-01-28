@@ -66,7 +66,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "IT Complete <noreply@itcomplete.com.br>", // Replace with your verified domain
+        from: "IT Complete <comercial@itcomplete.com.br>",
         to: [email],
         subject: "Recebemos sua mensagem - IT Complete",
         template_id: "be56005c-6881-4fa8-8783-4e972c0bfcd6",
