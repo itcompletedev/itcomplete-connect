@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabase";
+
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -27,30 +29,42 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    toast({
-      title: "Solicitação enviada!",
-      description: "Nosso time entrará em contato em breve.",
-    });
 
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        company: "",
-        email: "",
-        phone: "",
-        service: "",
-        message: "",
+    try {
+      const { error } = await supabase
+        .from('contact_requests')
+        .insert([formData]);
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      toast({
+        title: "Solicitação enviada!",
+        description: "Nosso time entrará em contato em breve.",
       });
-      onClose();
-    }, 2000);
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: "",
+          company: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+        onClose();
+      }, 2000);
+    } catch (error: any) {
+      console.error('Erro ao enviar orçamento:', error);
+      toast({
+        title: "Erro ao enviar",
+        description: "Ocorreu um problema. Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (

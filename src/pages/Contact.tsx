@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { Send, Mail, Phone, MapPin, Clock } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+
 
 const Contact = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,23 +35,37 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    toast({
-      title: "Mensagem enviada!",
-      description: "Nosso time entrará em contato em breve.",
-    });
-    
-    setFormData({
-      name: "",
-      company: "",
-      email: "",
-      phone: "",
-      service: "",
-      message: "",
-    });
+
+    try {
+      const { error } = await supabase
+        .from('contact_requests')
+        .insert([formData]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Mensagem enviada!",
+        description: "Nosso time entrará em contato em breve.",
+      });
+
+      setFormData({
+        name: "",
+        company: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
+    } catch (error: any) {
+      console.error('Erro ao enviar formulário:', error);
+      toast({
+        title: "Erro ao enviar",
+        description: "Ocorreu um problema ao enviar sua mensagem. Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const services = [
@@ -72,7 +88,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header onOpenModal={() => setIsModalOpen(true)} />
-      
+
       <main className="pt-32 pb-24">
         <div className="container mx-auto px-4 lg:px-8">
           {/* Hero */}
@@ -102,7 +118,7 @@ const Contact = () => {
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Envie sua mensagem
                 </h2>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
@@ -264,7 +280,7 @@ const Contact = () => {
       </main>
 
       <Footer />
-      
+
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

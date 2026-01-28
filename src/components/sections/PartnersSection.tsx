@@ -55,12 +55,12 @@ const PartnersSection = () => {
             {[...partners, ...partners].map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
-                className="flex items-center justify-center min-w-[200px] md:max-w-[200px] group transition-all duration-500"
+                className="flex items-center justify-center  group transition-all duration-500"
               >
                 <img
                   src={partner.logo}
                   alt={`${partner.name} logo`}
-                  className="h-9 md:h-12 w-auto object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                  className="object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
               </div>
             ))}
@@ -82,12 +82,12 @@ const PartnersSection = () => {
             {[...partners2, ...partners2].map((partner2, index) => (
               <div
                 key={`${partner2.name}-${index}`}
-                className="flex items-center justify-center min-w-[120px] md:max-w-[200px] group transition-all duration-500"
+                className="flex items-center justify-center group transition-all duration-500"
               >
                 <img
                   src={partner2.logo}
                   alt={`${partner2.name} logo`}
-                  className="h-15 md:h-12 w-auto object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
+                  className="object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
               </div>
             ))}
