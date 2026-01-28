@@ -69,12 +69,14 @@ const handler = async (req: Request): Promise<Response> => {
         from: "IT Complete <comercial@itcomplete.com.br>",
         to: [email],
         subject: "Recebemos sua mensagem - IT Complete",
-        template_id: "be56005c-6881-4fa8-8783-4e972c0bfcd6",
-        data: {
-          name: name,
-          company: company,
-          service: service || "Não especificado",
-          message: message || "Sem mensagem adicional",
+        template: {
+          id: "be56005c-6881-4fa8-8783-4e972c0bfcd6",
+          variables: {
+            name: name,
+            company: company || "Não informada",
+            service: service || "Não especificado",
+            message: message || "Sem mensagem adicional",
+          },
         },
       }),
     });
