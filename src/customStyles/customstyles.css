@@ -1,14 +1,10 @@
 .logo-img {
-    width: 60%;
+    width: 45%;
     transition: filter 0.3s ease;
 }
 
-.light .logo-img {
+.light .is-scrolled .logo-img {
     filter: invert(1);
-}
-
-#hero-box {
-    display: none;
 }
 
 #hero-image {
@@ -16,39 +12,64 @@
     z-index: -1;
 }
 
+.videoloop {
+    display: none;
+}
+
+.alltitles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .maintitle {
     font-size: 3.5rem;
     line-height: 3.5rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.inner-conecte {
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitle {
+    width: 74%;
+    margin: auto;
     color: white;
 }
 
 #services {
     padding-top: 5rem;
     padding-bottom: 5rem;
-    background: linear-gradient(to bottom, #0f1b2e, #142759), url(https://grainy-gradients.vercel.app/noise.svg);
+    background: linear-gradient(to bottom, #f9f9f900, var(--blueservicesgradient));
+    background-size: contain;
     color: #fff;
     height: fit-content;
 }
 
 .humanSection {
     width: 100%;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 .humancontainer {
-    background-color: #101010;
-    width: 70%;
+    background-color: #faecec;
+    width: 80%;
+    height: 600px;
     margin: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
-    background-image: url('/images/ITCOMPLETEBANNER.png');
+    background-image: url('/images/ITCOMPLETEBANNER-mobile.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -56,16 +77,26 @@
 
 .humancontainer-wrapper-one {
     width: 100%;
-    height: 100%;
-    padding: 4rem;
+    height: 50%;
+    padding: 1rem;
+    padding-top: 3rem;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     overflow: visible;
 }
 
+.humancontainer-wrapper-one-text {
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.humancontainer-wrapper-one-text p {
+    font-size: 1.1rem;
+}
+
 .humancontainer-wrapper-two {
-    width: 150%;
-    z-index: 1;
+    width: 100%;
+    height: 50%;
     overflow: visible;
 }
 
@@ -73,16 +104,7 @@
     width: 200% !important;
 }
 
-.videoloop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-    backdrop-filter: blur(5px);
-}
+
 
 .overlaybackground {
     position: absolute;
@@ -92,6 +114,49 @@
     height: 100%;
     z-index: 0;
     opacity: .5;
+    background: linear-gradient(to bottom, rgb(16, 79, 32), #68cea200), url('/images/gradient-noise.svg');
+    background-size: cover;
+}
+
+.maintitle {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    gap: 10px;
+}
+
+.inner-conecte {
+    line-height: 30px;
+}
+
+.conecte.one {
+    font-size: 1.2rem;
+    height: fit-content;
+}
+
+.conecte.two {
+    font-size: 1.8rem;
+    height: fit-content;
+}
+
+.conecte.two:hover {
+    color: #bdff93;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.conecte.three {
+    font-size: 2.8rem;
+    color: #bdff93;
+}
+
+.subtitle {
+    width: 100%;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 1px;
 }
 
 @media screen and (min-width: 1024px) {
@@ -102,8 +167,21 @@
         background-position: center;
     }
 
+    .videoloop {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        backdrop-filter: blur(5px);
+    }
+
     .overlaybackground {
-        background: linear-gradient(rgba(0, 0, 0, 0.868), #64636300);
+        background: linear-gradient(to bottom, rgb(16, 79, 32), var(--foreground)), url('/images/gradient-noise.svg');
+        background-size: cover;
         position: absolute;
         top: 0;
         left: 0;
@@ -111,8 +189,6 @@
         height: 100%;
         z-index: 1;
     }
-
-
 
     .logo-img {
         width: 25%;
@@ -123,13 +199,17 @@
     }
 
     .humancontainer {
-        width: 60%;
+        width: 55%;
         margin: 0 auto;
-        height: 450px;
+        height: 350px;
         display: flex;
         flex-direction: row;
         overflow: visible;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.395);
+        background-image: url('/images/ITCOMPLETEBANNER.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     .humancontainer-wrapper-two {
@@ -137,14 +217,80 @@
         height: 80%;
         position: relative;
         z-index: 0;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
         overflow: visible;
     }
 
     .humancontainer-wrapper-one-text h1 {
         font-size: 3rem;
+        line-height: 3rem;
+        margin-bottom: 1rem;
     }
 
+    .alltitles {
+        gap: 1rem;
+        height: 300px;
+    }
+
+    .maintitle {
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .inner-conecte {
+        line-height: 3rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        font-weight: 300;
+        width: 40%;
+        text-align: center;
+    }
+
+    .conecte.one {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .conecte.two {
+        font-size: 3.3rem;
+        text-align: center;
+
+    }
+
+    .conecte.three {
+        font-size: 4rem;
+        text-align: center;
+    }
+}
+
+.section-service {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding-top: 5rem;
+    padding-bottom: 8rem;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.section-service::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.section-service .container {
+    position: relative;
+    z-index: 2;
 }

@@ -19,7 +19,7 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header onOpenModal={() => setIsModalOpen(true)} />
-      
+
       <main className="pt-32">
         {/* Hero */}
         <section className="pb-20">
@@ -154,10 +154,17 @@ const About = () => {
                   "Virtualização e containers",
                   "Serviços gerenciados (MSP)",
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center gap-3"
+                  >
                     <CheckCircle size={18} className="text-primary flex-shrink-0" />
                     <span className="text-foreground">{item}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -168,7 +175,7 @@ const About = () => {
       </main>
 
       <Footer />
-      
+
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

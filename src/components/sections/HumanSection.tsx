@@ -8,13 +8,18 @@ const HumanSection = () => {
     return (
         <section className="humanSection">
             <div className="humancontainer">
-                <div className="humancontainer-wrapper-one">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="humancontainer-wrapper-one"
+                >
                     <div className="humancontainer-wrapper-one-text">
-                        <h1>Expertise</h1>
-                        <p>Desenvolvemos resultados orientados a pessoas</p>
+                        <h1>Mais de 15 anos de experiência</h1>
+                        <p>Desenvolvendo resultados orientados a necessidades reais.</p>
                     </div>
-                </div>
-
+                </motion.div>
                 <div className="humancontainer-wrapper-two">
                 </div>
             </div>

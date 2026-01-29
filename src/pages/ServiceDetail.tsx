@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Navigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -11,7 +11,12 @@ import { CheckCircle, ArrowRight, Award, Clock, Users, Target } from "lucide-rea
 
 const ServiceDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const { pathname } = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id, pathname]);
 
   const service = id ? getServiceById(id) : undefined;
 
@@ -29,10 +34,11 @@ const ServiceDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header onOpenModal={() => setIsModalOpen(true)} />
-      
+
       <main className="pt-32">
         {/* Hero */}
-        <section className="pb-20">
+        <section className="section-service" style={{ backgroundImage: `url(${service.heroImage})` }}>
+
           <div className="container mx-auto px-4 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -43,11 +49,11 @@ const ServiceDetail = () => {
                 <service.icon size={16} className="text-primary" />
                 <span className="text-sm text-muted-foreground">{service.title}</span>
               </div>
-              
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {service.heroTitle}
               </h1>
-              
+
               <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
                 {service.heroSubtitle}
               </p>
@@ -57,9 +63,7 @@ const ServiceDetail = () => {
                   Solicitar orçamento
                   <ArrowRight size={20} />
                 </Button>
-                <Button variant="heroOutline" size="xl" onClick={() => setIsModalOpen(true)}>
-                  Falar com especialista
-                </Button>
+
               </div>
             </motion.div>
           </div>
@@ -79,10 +83,17 @@ const ServiceDetail = () => {
                 </h2>
                 <ul className="space-y-4">
                   {service.deliverables.map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                      className="flex items-start gap-3"
+                    >
                       <CheckCircle size={20} className="text-primary flex-shrink-0 mt-1" />
                       <span className="text-foreground">{item}</span>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </motion.div>
@@ -97,10 +108,17 @@ const ServiceDetail = () => {
                 </h2>
                 <ul className="space-y-4">
                   {service.benefits.map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                      className="flex items-start gap-3"
+                    >
                       <CheckCircle size={20} className="text-primary flex-shrink-0 mt-1" />
                       <span className="text-foreground">{item}</span>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </motion.div>
@@ -148,7 +166,7 @@ const ServiceDetail = () => {
       </main>
 
       <Footer />
-      
+
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

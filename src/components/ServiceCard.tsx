@@ -1,5 +1,6 @@
+import React, { MouseEvent as ReactMouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowRight, LucideIcon } from "lucide-react";
 
 interface ServiceCardProps {
@@ -11,6 +12,21 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ icon: Icon, title, description, href, delay = 0 }: ServiceCardProps) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: ReactMouseEvent<HTMLAnchorElement>) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  const background = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, hsl(var(--primary) / 0.15), transparent 80%)`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -21,9 +37,13 @@ const ServiceCard = ({ icon: Icon, title, description, href, delay = 0 }: Servic
     >
       <Link
         to={href}
-        className="group relative block p-8 bg-card/40 backdrop-blur-md border border-white/5 rounded-2xl hover:border-primary/50 transition-all duration-500 h-full overflow-hidden hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/5"
+        onMouseMove={handleMouseMove}
+        className="group relative block p-8 bg-card/80 backdrop-blur-md border border-border/50 rounded-2xl hover:border-primary/50 transition-all duration-500 h-full overflow-hidden hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/5"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition duration-300 group-hover:opacity-100"
+          style={{ background }}
+        />
 
         <div className="relative z-10">
           <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary z-10 transition-colors duration-300">
@@ -34,7 +54,7 @@ const ServiceCard = ({ icon: Icon, title, description, href, delay = 0 }: Servic
             {title}
           </h3>
 
-          <p className="text-base leading-relaxed mb-6 group-hover:text-foreground/80 transition-colors">
+          <p className="text-base text-muted-foreground leading-relaxed mb-6 group-hover:text-foreground transition-colors">
             {description}
           </p>
 

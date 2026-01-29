@@ -15,8 +15,8 @@ const ServicesSection = () => {
           className="text-center mb-16"
           id="services-section"
         >
-          <span className="font-medium tracking-wider uppercase text-sm mb-4 block">Nossas Especialidades</span>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+          <span className="font-medium tracking-wider uppercase text-foreground text-sm mb-4 block">Nossas Especialidades</span>
+          <h2 className="text-3xl md:text-5xl text-foreground font-bold mb-6">
             Soluções completas de TI
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">

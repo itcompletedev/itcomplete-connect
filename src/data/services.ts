@@ -16,6 +16,7 @@ export interface Service {
   shortDescription: string;
   heroTitle: string;
   heroSubtitle: string;
+  heroImage: string;
   deliverables: string[];
   benefits: string[];
 }
@@ -28,6 +29,7 @@ export const services: Service[] = [
     shortDescription: "Projetos e implementação de ambientes de alta performance para operações críticas.",
     heroTitle: "Projetos de Alto Desempenho para Infraestrutura Crítica",
     heroSubtitle: "Desenho, implementação e otimização de ambientes que garantem performance, disponibilidade e escalabilidade para seu negócio.",
+    heroImage: "/images/services-banners/INFRA.png",
     deliverables: [
       "Análise e diagnóstico de ambiente atual",
       "Projeto de arquitetura de infraestrutura",
@@ -51,6 +53,7 @@ export const services: Service[] = [
     shortDescription: "Proteção completa contra ameaças, compliance e gestão de riscos cibernéticos.",
     heroTitle: "Proteção Avançada Contra Ameaças Cibernéticas",
     heroSubtitle: "Estratégias de defesa em profundidade para proteger seus dados, sistemas e reputação contra ataques cada vez mais sofisticados.",
+    heroImage: "/images/services-banners/SEGUR.png",
     deliverables: [
       "Assessment de segurança e análise de vulnerabilidades",
       "Implementação de firewalls de próxima geração",
@@ -72,8 +75,9 @@ export const services: Service[] = [
     icon: Cloud,
     title: "Cloud & Data Center",
     shortDescription: "Migração, operação e otimização de ambientes cloud e data centers híbridos.",
-    heroTitle: "Transformação Digital com Cloud e Data Center",
+    heroTitle: "Alta performance em Cloud Computing e Data Centers",
     heroSubtitle: "Estratégias de cloud híbrida e multi-cloud para acelerar a inovação com controle de custos e governança.",
+    heroImage: "/images/services-banners/CLOUD.png",
     deliverables: [
       "Assessment de workloads para cloud",
       "Migração para AWS, Azure ou Google Cloud",
@@ -97,6 +101,7 @@ export const services: Service[] = [
     shortDescription: "Projeto, implementação e gestão de redes LAN, WAN e SD-WAN de alta performance.",
     heroTitle: "Conectividade de Alta Performance para Empresas",
     heroSubtitle: "Redes corporativas modernas, seguras e preparadas para suportar a transformação digital do seu negócio.",
+    heroImage: "/images/services-banners/REDES.png",
     deliverables: [
       "Projeto de arquitetura de rede",
       "Implementação de switches e roteadores enterprise",
@@ -120,6 +125,7 @@ export const services: Service[] = [
     shortDescription: "Proteção de dados com estratégias de backup, DR e recuperação de desastres.",
     heroTitle: "Proteção de Dados e Continuidade de Negócios",
     heroSubtitle: "Estratégias robustas de backup e disaster recovery para garantir que seus dados estejam sempre protegidos e recuperáveis.",
+    heroImage: "/images/services-banners/BACKUP.png",
     deliverables: [
       "Assessment de política de backup atual",
       "Implementação de soluções de backup enterprise",
@@ -143,6 +149,7 @@ export const services: Service[] = [
     shortDescription: "Visibilidade completa do ambiente com monitoramento proativo e observabilidade.",
     heroTitle: "Visibilidade Total do Seu Ambiente de TI",
     heroSubtitle: "Monitoramento proativo e observabilidade para identificar problemas antes que impactem o negócio.",
+    heroImage: "/images/services-banners/MONITOR.png",
     deliverables: [
       "Implementação de plataformas de monitoramento",
       "Dashboards customizados e real-time",
@@ -166,6 +173,7 @@ export const services: Service[] = [
     shortDescription: "Gestão completa de TI com equipe especializada e SLA garantido.",
     heroTitle: "Gestão de TI com Expertise e Compromisso",
     heroSubtitle: "Deixe a operação de TI com especialistas e foque no que realmente importa: o crescimento do seu negócio.",
+    heroImage: "/images/services-banners/GERENCIADOS.png",
     deliverables: [
       "NOC 24/7 com monitoramento proativo",
       "Gestão de incidentes e problemas",

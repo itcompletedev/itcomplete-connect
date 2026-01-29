@@ -11,7 +11,7 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 92 88% 50%;
+    --primary: 92 100% 82%;
     --primary-foreground: 240 10% 4%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -25,6 +25,7 @@
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
     --radius: 0.75rem;
+    --blueservicesgradient: #c1f6a6;
     /* Custom Gradients & Tokens */
     --gradient-start: 0 0% 100%;
     --gradient-end: 240 4.8% 95.9%;
@@ -47,6 +48,7 @@
     --muted-foreground: 240 5% 60%;
     --accent: 240 6% 14%;
     --accent-foreground: 0 0% 98%;
+    --blueservicesgradient: #254d8e;
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 6% 14%;
