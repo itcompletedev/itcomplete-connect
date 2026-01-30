@@ -3,6 +3,7 @@ import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+const RECAPTCHA_SECRET_KEY = Deno.env.get("RECAPTCHA_SECRET_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -19,8 +20,35 @@ const ContactRecordSchema = z.object({
   phone: z.string().max(30).nullable().optional(),
   service: z.string().max(100).nullable().optional(),
   message: z.string().max(2000).nullable().optional(),
+  recaptcha_token: z.string().min(1).nullable().optional(),
   created_at: z.string(),
 });
+
+// Verify ReCAPTCHA token with Google's API
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  if (!RECAPTCHA_SECRET_KEY) {
+    console.error("RECAPTCHA_SECRET_KEY is not configured");
+    return false;
+  }
+
+  try {
+    const verifyResponse = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `secret=${RECAPTCHA_SECRET_KEY}&response=${encodeURIComponent(token)}`,
+      }
+    );
+
+    const result = await verifyResponse.json();
+    console.log("ReCAPTCHA verification result:", result.success ? "valid" : "invalid");
+    return result.success === true;
+  } catch (error) {
+    console.error("ReCAPTCHA verification failed:", error);
+    return false;
+  }
+}
 
 const WebhookPayloadSchema = z.object({
   type: z.enum(["INSERT", "UPDATE", "DELETE"]),
@@ -87,7 +115,25 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { name, email, company, phone, service, message, created_at } = payload.record;
+    const { name, email, company, phone, service, message, recaptcha_token, created_at } = payload.record;
+
+    // Verify ReCAPTCHA token server-side
+    if (!recaptcha_token) {
+      console.error("Missing ReCAPTCHA token");
+      return new Response(
+        JSON.stringify({ error: "Missing ReCAPTCHA token" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    const isValidCaptcha = await verifyRecaptcha(recaptcha_token);
+    if (!isValidCaptcha) {
+      console.error("Invalid ReCAPTCHA token");
+      return new Response(
+        JSON.stringify({ error: "Invalid ReCAPTCHA verification" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
     console.log(`Sending confirmation email to ${escapeHtml(email)}`);
 
