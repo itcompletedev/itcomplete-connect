@@ -47,7 +47,7 @@ const ServiceCard = ({ icon: Icon, title, description, href, delay = 0 }: Servic
 
         <div className="relative z-10">
           <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary z-10 transition-colors duration-300">
-            <Icon className="text-primary group-hover:text-primary-foreground transition-colors duration-300" size={28} />
+            <Icon className="text-foreground group-hover:text-primary-foreground transition-colors duration-300" size={28} />
           </div>
 
           <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
@@ -58,7 +58,7 @@ const ServiceCard = ({ icon: Icon, title, description, href, delay = 0 }: Servic
             {description}
           </p>
 
-          <span className="inline-flex items-center gap-2 text-primary font-semibold text-sm tracking-wide uppercase">
+          <span className="inline-flex items-center gap-2 text-foreground font-semibold text-sm tracking-wide uppercase">
             Explorar
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </span>

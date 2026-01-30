@@ -16,11 +16,30 @@
     display: none;
 }
 
+.ctaCarossel {
+    background: #bdff93;
+    color: white;
+}
+
+.videoloopmobile {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    backdrop-filter: blur(5px);
+}
+
 .alltitles {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-content: center;
+    gap: 13px;
 }
 
 .maintitle {
@@ -29,7 +48,8 @@
     color: white;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+
+    text-align: center;
 }
 
 .inner-conecte {
@@ -60,8 +80,8 @@
 
 .humancontainer {
     background-color: #faecec;
-    width: 80%;
-    height: 600px;
+    width: 95%;
+    height: 520px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -85,6 +105,12 @@
     overflow: visible;
 }
 
+.humancontainer-wrapper-two {
+    width: 100%;
+    height: 20%;
+    overflow: visible;
+}
+
 .humancontainer-wrapper-one-text {
     border-radius: 15px;
     padding: 10px;
@@ -94,14 +120,14 @@
     font-size: 1.1rem;
 }
 
-.humancontainer-wrapper-two {
-    width: 100%;
-    height: 50%;
-    overflow: visible;
-}
+
 
 #human {
     width: 200% !important;
+}
+
+#herosection {
+    background-color: #1b1b1b;
 }
 
 
@@ -114,16 +140,11 @@
     height: 100%;
     z-index: 0;
     opacity: .5;
-    background: linear-gradient(to bottom, rgb(16, 79, 32), #68cea200), url('/images/gradient-noise.svg');
+    background: linear-gradient(to bottom, rgb(16, 79, 32), #1b1b1b);
     background-size: cover;
 }
 
-.maintitle {
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    gap: 10px;
-}
+
 
 .inner-conecte {
     line-height: 30px;
@@ -159,6 +180,16 @@
     letter-spacing: 1px;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .subtitle {
+        width: 70%;
+    }
+
+    .humancontainer {
+        width: 70%;
+    }
+}
+
 @media screen and (min-width: 1024px) {
 
     #herosection {
@@ -177,6 +208,10 @@
         object-fit: cover;
         z-index: 0;
         backdrop-filter: blur(5px);
+    }
+
+    .videoloopmobile {
+        display: none;
     }
 
     .overlaybackground {

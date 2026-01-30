@@ -15,6 +15,7 @@ const HeroSection = ({
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden" id="herosection">
       <div className="overlaybackground"></div>
       <video src="/images/background-loop-compressed.mp4" autoPlay loop muted className="videoloop" />
+      <video src="/images/LOOPITCOMPLETE-mobile-COMP.mp4" autoPlay loop muted className="videoloopmobile" />
       <div className="container mx-auto lg:px-8 relative z-10">
         <div className="alltitles">
           <motion.h1

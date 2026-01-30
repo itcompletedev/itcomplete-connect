@@ -80,7 +80,7 @@ const Contact = () => {
 
   const contactInfo = [
     { icon: Mail, label: "E-mail", value: "contato@itcomplete.com.br" },
-    { icon: Phone, label: "Telefone", value: "(11) 3000-0000" },
+    { icon: Phone, label: "Telefone", value: "+55 (11) 98080-3677" },
     { icon: MapPin, label: "Endereço", value: "São Paulo, SP - Brasil" },
     { icon: Clock, label: "Horário", value: "Seg - Sex: 8h às 18h" },
   ];
@@ -88,7 +88,6 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header onOpenModal={() => setIsModalOpen(true)} />
-
       <main className="pt-32 pb-24">
         <div className="container mx-auto px-4 lg:px-8">
           {/* Hero */}
@@ -258,7 +257,7 @@ const Contact = () => {
                 </ul>
               </div>
 
-              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-8">
+              {/* <div className="bg-primary/5 border border-primary/20 rounded-2xl p-8">
                 <h3 className="text-lg font-semibold text-foreground mb-3">
                   Precisa de ajuda urgente?
                 </h3>
@@ -273,7 +272,7 @@ const Contact = () => {
                 >
                   Falar com suporte
                 </Button>
-              </div>
+              </div> */}
             </motion.div>
           </div>
         </div>

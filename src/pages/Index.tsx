@@ -9,6 +9,7 @@ import ProofSection from "@/components/sections/ProofSection";
 import PartnersSection from "@/components/sections/PartnersSection";
 import CTASection from "@/components/sections/CTASection";
 import HumanSection from "@/components/sections/HumanSection";
+import TechCarouselSection from "@/components/sections/TechCarouselSection";
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +23,7 @@ const Index = () => {
         <HumanSection />
         <ServicesSection />
         <PartnersSection />
+        <TechCarouselSection />
         <DifferentialsSection />
         <ProofSection />
         <CTASection onOpenModal={() => setIsModalOpen(true)} />
