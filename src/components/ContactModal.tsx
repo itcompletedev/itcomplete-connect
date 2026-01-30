@@ -70,8 +70,8 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
         recaptchaRef.current?.reset();
         onClose();
       }, 2000);
-    } catch (error: any) {
-      console.error('Erro ao enviar orçamento:', error);
+    } catch (error: unknown) {
+      // Error details logged server-side only
       toast({
         title: "Erro ao enviar",
         description: "Ocorreu um problema. Tente novamente mais tarde.",
