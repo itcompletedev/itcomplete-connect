@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -9,11 +9,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { Send, Mail, Phone, MapPin, Clock } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 const Contact = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -32,22 +35,28 @@ const Contact = () => {
     }));
   };
 
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!captchaToken) {
+      toast({
+        title: "Captcha necessário",
+        description: "Por favor, verifique que você não é um robô.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Execute reCAPTCHA
-      const token = await new Promise<string>((resolve) => {
-        (window as any).grecaptcha.enterprise.ready(async () => {
-          const token = await (window as any).grecaptcha.enterprise.execute('6LfMblssAAAAAMEgxf4Sb1Flpr-qH95boQYxvF15', { action: 'CONTACT_PAGE' });
-          resolve(token);
-        });
-      });
-
       const { error } = await supabase
         .from('contact_requests')
-        .insert([{ ...formData, recaptcha_token: token }]);
+        .insert([{ ...formData, recaptcha_token: captchaToken }]);
 
       if (error) throw error;
 
@@ -64,6 +73,8 @@ const Contact = () => {
         service: "",
         message: "",
       });
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
     } catch (error: any) {
       console.error('Erro ao enviar formulário:', error);
       toast({
@@ -219,12 +230,21 @@ const Contact = () => {
                     />
                   </div>
 
+                  <div className="py-2">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey="6LcgfFssAAAAALfj4KJj-QKhGp8FGaE6Zg7crj-s"
+                      onChange={handleCaptchaChange}
+                      theme="dark"
+                    />
+                  </div>
+
                   <Button
                     type="submit"
                     variant="hero"
                     size="lg"
                     className="w-full sm:w-auto"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !captchaToken}
                   >
                     {isSubmitting ? (
                       "Enviando..."

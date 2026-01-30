@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, CheckCircle } from "lucide-react";
@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 interface ContactModalProps {
@@ -25,23 +26,27 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!captchaToken) {
+      toast({
+        title: "Captcha necessário",
+        description: "Por favor, verifique que você não é um robô.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Execute reCAPTCHA
-      const token = await new Promise<string>((resolve) => {
-        (window as any).grecaptcha.enterprise.ready(async () => {
-          const token = await (window as any).grecaptcha.enterprise.execute('6LfMblssAAAAAMEgxf4Sb1Flpr-qH95boQYxvF15', { action: 'CONTACT_MODAL' });
-          resolve(token);
-        });
-      });
-
       const { error } = await supabase
         .from('contact_requests')
-        .insert([{ ...formData, recaptcha_token: token }]);
+        .insert([{ ...formData, recaptcha_token: captchaToken }]);
 
       if (error) throw error;
 
@@ -61,6 +66,8 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
           service: "",
           message: "",
         });
+        setCaptchaToken(null);
+        recaptchaRef.current?.reset();
         onClose();
       }, 2000);
     } catch (error: any) {
@@ -73,6 +80,10 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
   };
 
   const handleChange = (
@@ -245,12 +256,21 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                       />
                     </div>
 
+                    <div className="flex justify-center py-2">
+                      <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey="6LcgfFssAAAAALfj4KJj-QKhGp8FGaE6Zg7crj-s"
+                        onChange={handleCaptchaChange}
+                        theme="dark"
+                      />
+                    </div>
+
                     <Button
                       type="submit"
                       variant="hero"
                       size="lg"
                       className="w-full"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || !captchaToken}
                     >
                       {isSubmitting ? (
                         "Enviando..."
