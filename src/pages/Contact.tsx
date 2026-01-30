@@ -75,8 +75,8 @@ const Contact = () => {
       });
       setCaptchaToken(null);
       recaptchaRef.current?.reset();
-    } catch (error: any) {
-      console.error('Erro ao enviar formulário:', error);
+    } catch (error: unknown) {
+      // Error details logged server-side only
       toast({
         title: "Erro ao enviar",
         description: "Ocorreu um problema ao enviar sua mensagem. Tente novamente mais tarde.",
