@@ -30,7 +30,6 @@ const Index = () => {
       </main>
 
       <Footer />
-
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

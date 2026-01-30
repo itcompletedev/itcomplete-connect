@@ -37,9 +37,17 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      // Execute reCAPTCHA
+      const token = await new Promise<string>((resolve) => {
+        (window as any).grecaptcha.enterprise.ready(async () => {
+          const token = await (window as any).grecaptcha.enterprise.execute('6LfMblssAAAAAMEgxf4Sb1Flpr-qH95boQYxvF15', { action: 'CONTACT_PAGE' });
+          resolve(token);
+        });
+      });
+
       const { error } = await supabase
         .from('contact_requests')
-        .insert([formData]);
+        .insert([{ ...formData, recaptcha_token: token }]);
 
       if (error) throw error;
 
