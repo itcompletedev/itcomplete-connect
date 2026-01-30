@@ -98,7 +98,7 @@ const Contact = () => {
   ];
 
   const contactInfo = [
-    { icon: Mail, label: "E-mail", value: "contato@itcomplete.com.br" },
+    { icon: Mail, label: "E-mail", value: "comercial@itcomplete.com.br" },
     { icon: Phone, label: "Telefone", value: "+55 (11) 98080-3677" },
     { icon: MapPin, label: "Endereço", value: "São Paulo, SP - Brasil" },
     { icon: Clock, label: "Horário", value: "Seg - Sex: 8h às 18h" },
