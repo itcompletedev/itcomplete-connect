@@ -175,6 +175,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                           value={formData.name}
                           onChange={handleChange}
                           required
+                          maxLength={100}
                           placeholder="Seu nome"
                           className="bg-secondary border-border"
                         />
@@ -188,6 +189,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                           value={formData.company}
                           onChange={handleChange}
                           required
+                          maxLength={200}
                           placeholder="Nome da empresa"
                           className="bg-secondary border-border"
                         />
@@ -205,6 +207,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                           value={formData.email}
                           onChange={handleChange}
                           required
+                          maxLength={255}
                           placeholder="email@empresa.com"
                           className="bg-secondary border-border"
                         />
@@ -218,6 +221,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
+                          maxLength={30}
                           placeholder="(11) 99999-9999"
                           className="bg-secondary border-border"
                         />
@@ -251,6 +255,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
+                        maxLength={2000}
                         placeholder="Conte-nos sobre seu desafio de TI..."
                         className="bg-secondary border-border min-h-[100px]"
                       />

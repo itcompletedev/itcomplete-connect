@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -8,21 +10,35 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-interface WebhookPayload {
-  type: "INSERT" | "UPDATE" | "DELETE";
-  table: string;
-  record: {
-    id: string;
-    name: string;
-    company: string;
-    email: string;
-    phone: string;
-    service: string;
-    message: string;
-    created_at: string;
-  };
-  schema: string;
-  old_record: null | Record<string, unknown>;
+// Input validation schema
+const ContactRecordSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1).max(100),
+  email: z.string().email().max(255),
+  company: z.string().max(200).nullable().optional(),
+  phone: z.string().max(30).nullable().optional(),
+  service: z.string().max(100).nullable().optional(),
+  message: z.string().max(2000).nullable().optional(),
+  created_at: z.string(),
+});
+
+const WebhookPayloadSchema = z.object({
+  type: z.enum(["INSERT", "UPDATE", "DELETE"]),
+  table: z.string(),
+  record: ContactRecordSchema,
+  schema: z.string(),
+  old_record: z.unknown().nullable(),
+});
+
+// HTML escape function to prevent XSS
+function escapeHtml(unsafe: string | null | undefined): string {
+  if (!unsafe) return "";
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -32,11 +48,33 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Verify authentication - webhook should include service role key
+    const authHeader = req.headers.get("authorization");
+    if (!authHeader || authHeader !== `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`) {
+      console.error("Unauthorized request - missing or invalid authorization header");
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     if (!RESEND_API_KEY) {
       throw new Error("RESEND_API_KEY is not configured");
     }
 
-    const payload: WebhookPayload = await req.json();
+    // Parse and validate the webhook payload
+    const rawPayload = await req.json();
+    const parseResult = WebhookPayloadSchema.safeParse(rawPayload);
+
+    if (!parseResult.success) {
+      console.error("Invalid webhook payload:", parseResult.error.errors);
+      return new Response(
+        JSON.stringify({ error: "Invalid payload format" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    const payload = parseResult.data;
 
     // Validate this is an INSERT event
     if (payload.type !== "INSERT") {
@@ -49,14 +87,9 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { name, email, company, service, message } = payload.record;
+    const { name, email, company, phone, service, message, created_at } = payload.record;
 
-    // Validate required fields
-    if (!email || !name) {
-      throw new Error("Missing required fields: email or name");
-    }
-
-    console.log(`Sending confirmation email to ${email}`);
+    console.log(`Sending confirmation email to ${escapeHtml(email)}`);
 
     // Send confirmation email to customer using Resend API with template
     const customerEmailResponse = await fetch("https://api.resend.com/emails", {
@@ -72,10 +105,10 @@ const handler = async (req: Request): Promise<Response> => {
         template: {
           id: "be56005c-6881-4fa8-8783-4e972c0bfcd6",
           variables: {
-            name: name,
-            company: company || "Não informada",
-            service: service || "Não especificado",
-            message: message || "Sem mensagem adicional",
+            name: escapeHtml(name),
+            company: escapeHtml(company) || "Não informada",
+            service: escapeHtml(service) || "Não especificado",
+            message: escapeHtml(message) || "Sem mensagem adicional",
           },
         },
       }),
@@ -101,37 +134,37 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "IT Complete <comercial@itcomplete.com.br>",
         to: ["comercial@itcomplete.com.br"],
-        subject: `Nova solicitação de contato: ${name}`,
+        subject: `Nova solicitação de contato: ${escapeHtml(name)}`,
         html: `
           <h2>Nova solicitação de contato recebida</h2>
           <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Nome:</td>
-              <td style="padding: 10px; border: 1px solid #ddd;">${name}</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${escapeHtml(name)}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">E-mail:</td>
-              <td style="padding: 10px; border: 1px solid #ddd;"><a href="mailto:${email}">${email}</a></td>
+              <td style="padding: 10px; border: 1px solid #ddd;"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Telefone:</td>
-              <td style="padding: 10px; border: 1px solid #ddd;">${payload.record.phone || "Não informado"}</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${escapeHtml(phone) || "Não informado"}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Empresa:</td>
-              <td style="padding: 10px; border: 1px solid #ddd;">${company || "Não informada"}</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${escapeHtml(company) || "Não informada"}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Serviço:</td>
-              <td style="padding: 10px; border: 1px solid #ddd;">${service || "Não especificado"}</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${escapeHtml(service) || "Não especificado"}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Mensagem:</td>
-              <td style="padding: 10px; border: 1px solid #ddd;">${message || "Sem mensagem"}</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${escapeHtml(message) || "Sem mensagem"}</td>
             </tr>
           </table>
           <p style="margin-top: 20px; color: #666;">
-            Recebido em: ${new Date(payload.record.created_at).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}
+            Recebido em: ${new Date(created_at).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}
           </p>
         `,
       }),
@@ -150,10 +183,11 @@ const handler = async (req: Request): Promise<Response> => {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
-  } catch (error: any) {
-    console.error("Error in send-contact-email function:", error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error("Error in send-contact-email function:", errorMessage);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "Internal server error" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
